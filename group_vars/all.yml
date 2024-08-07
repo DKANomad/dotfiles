@@ -1,0 +1,4 @@
+default_roles:
+  - lazygit
+  - nvm
+  - zsh

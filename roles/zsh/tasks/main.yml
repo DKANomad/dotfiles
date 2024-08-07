@@ -1,0 +1,31 @@
+---
+- name: "Bash | Detect oh-my-posh"
+  ansible.builtin.stat:
+    path: "{{ ansible_user_dir }}/.ohmyposh"
+  register: ohmyposh
+
+- name: "ZSH | Debug oh-my-posh"
+  ansible.builtin.debug:
+    var: ohmyposh
+
+- name: "ZSH | Register oh-my-posh state"
+  ansible.builtin.set_fact:
+    ohmyposh_is_installed: "{{ ohmyposh.stat.exists }}"
+
+- name: "ZSH | Debug oh-my-posh is installed"
+  ansible.builtin.debug:
+    var: ohmyposh_is_installed
+
+- name: "ZSH | Install oh-my-posh"
+  when: not ohmyposh_is_installed
+  block:
+    - name: "ZSH | Download oh-my-posh install script"
+      community.general.homebrew:
+        name: jandedobbeleer/oh-my-posh/oh-my-posh
+        state: present
+
+- name: "ZSH | Copy .zprofile"
+  ansible.builtin.copy:
+    src: ".zprofile"
+    dest: "{{ ansible_user_dir }}/.zprofile"
+    mode: "0644"

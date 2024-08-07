@@ -1,0 +1,4 @@
+---
+- name: "Lazy Git | Download using Brew"
+  community.general.homebrew:
+    name: lazygit
