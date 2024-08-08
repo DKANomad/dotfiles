@@ -2,4 +2,5 @@ default_roles:
   - alacritty
   - lazygit
   - nvm
+  - pwsh
   - zsh
