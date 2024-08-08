@@ -1,0 +1,4 @@
+---
+- name: Run WSL Tasks
+  ansible.builtin.import_tasks: wsl.yml
+  when: ansible_host_environment_is_wsl

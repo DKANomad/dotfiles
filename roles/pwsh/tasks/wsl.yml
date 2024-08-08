@@ -1,0 +1,38 @@
+---
+- name: Powershell | Install Alacritty
+  win_chocolatey:
+    name: alacritty
+    state: present
+
+- name: Powershell | Install modules
+  ansible.builtin.shell: |
+    if(-not (Get-Module Terminal-Icons -List-Available)) {
+      Install-Module -Name Terminal-Icons -Repository PSGallery
+    }
+
+    if(-not (Get-Module PSReadLine -List-Available)) {
+      Install-Module PSReadLine -AllowPrerelease -Force
+    }
+
+    if(-not (Get-Module z -List-Available)) {
+      Install-Module -Name z
+    }
+  args:
+    executable: pwsh.exe
+
+- name: Powershell | Register profile location
+  ansible.builtin.shell: |
+    Write-Host $PROFILE
+  args:
+    executable: pwsh.exe
+  register: powershell_profile
+
+- name: Powershell | Show profile location
+  ansible.builtin.debug:
+    var: powershell_profile
+
+- name: Powershell | Copy profile
+  ansible.builtin.copy:
+    src: profile
+    dest: "{{ powershell_profile.stdout }}"
+  
