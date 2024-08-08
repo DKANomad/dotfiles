@@ -1,0 +1,8 @@
+---
+- name: "ZSH | Install oh-my-posh"
+  when: not ohmyposh_is_installed
+  block:
+    - name: "ZSH | Download oh-my-posh install script"
+      community.general.homebrew:
+        name: jandedobbeleer/oh-my-posh/oh-my-posh
+        state: present

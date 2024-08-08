@@ -1,0 +1,10 @@
+---
+- name: "Run Mac tasks"
+  ansible.builtin.import_tasks: darwin.yml
+  when: ansible_os_family == 'Darwin'
+
+- name: "Alacritty | Copy config file"
+  ansible.builtin.copy:
+    src: alacritty.toml
+    dest: "{{ ansible_user_dir }}/.config/alacritty.toml"
+    mode: "0644"

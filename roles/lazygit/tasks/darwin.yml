@@ -1,0 +1,4 @@
+---
+- name: "LazyGit | Install with homebrew"
+  community.general.homebrew:
+    name: lazygit

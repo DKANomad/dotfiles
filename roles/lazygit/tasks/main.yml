@@ -1,4 +1,4 @@
 ---
-- name: "Lazy Git | Download using Brew"
-  community.general.homebrew:
-    name: lazygit
+- name: "Run Mac Tasks"
+  ansible.builtin.import_tasks: darwin.yml
+  when: ansible_os_family == 'Darwin'

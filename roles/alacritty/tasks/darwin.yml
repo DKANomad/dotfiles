@@ -1,0 +1,5 @@
+---
+- name: "Alacritty | Install with homebrew"
+  community.general.homebrew:
+    name: alacritty
+    
