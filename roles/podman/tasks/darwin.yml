@@ -1,0 +1,11 @@
+---
+- name: "Podman | Install with homebrew"
+  community.general.homebrew:
+    name: podman-desktop
+
+# Todo: get this working as part of the automation
+# - name: "Podman | Copy docker proxy file"
+#   ansible.builtin.copy:
+#     src: docker
+#     dest: /usr/local/bin/docker
+#     mode: "755"
