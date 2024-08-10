@@ -1,0 +1,5 @@
+---
+- name: Burpsuite | Install using choco
+  win_chocolatey:
+    name: burp-suite-free-edition
+    state: present

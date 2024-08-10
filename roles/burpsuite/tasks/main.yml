@@ -1,0 +1,8 @@
+---
+- name: Run mac tasks
+  ansible.builtin.import_tasks: darwin.yml
+  when: ansible_os_family == 'Darwin'
+
+- name: Run wsl tasks
+  ansible.builtin.import_tasks: wsl.yml
+  when: ansible_host_environment_is_wsl

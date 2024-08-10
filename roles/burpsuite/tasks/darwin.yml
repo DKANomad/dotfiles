@@ -1,0 +1,4 @@
+---
+- name: Burpsuite | Install with brew
+  community.general.homebrew:
+    name: burp-suite

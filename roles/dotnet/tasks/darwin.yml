@@ -1,4 +1,4 @@
 ---
 - name: Dotnet | Install using brew
-  community.general.brew:
+  community.general.homebrew:
     name: dotnet
