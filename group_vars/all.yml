@@ -5,4 +5,5 @@ default_roles:
   - nvm
   - podman
   - pwsh
+  - tmux
   - zsh
