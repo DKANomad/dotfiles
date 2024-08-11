@@ -36,6 +36,14 @@ if ! [[ -f "$SSH_DIR/id_rsa" ]]; then
     chmod 600 $"$SSH_DIR/authorized_keys"
 fi
 
+if ! [[ -d "$DOTFILES_DIR" ]]; then
+    echo "Cloning repository"
+    git clone --quiet https://github.com/dkanomad/dotfiles.git $DOTFILES_DIR
+else
+    echo "Updating repository"
+    git -C $DOTFILES_DIR pull --quiet
+fi
+
 if [[ -f "$DOTFILES_DIR/requirements.yml" ]]; then
     cd "$DOTFILES_DIR"
 
