@@ -21,6 +21,11 @@ if ! [ -x "$(command -v ansible)" ]; then
     pipx install --include-deps ansible
 fi
 
+# Install ansible
+if ! [ -x "$(command -v ansible-lint)" ]; then
+    pipx install ansible-lint
+fi
+
 # Generate SSH Key
 if ! [[ -f "$SSH_DIR/id_rsa" ]]; then
     mkdir -p "$SSH_DIR"

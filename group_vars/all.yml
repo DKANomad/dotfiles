@@ -1,6 +1,8 @@
 default_roles:
   - alacritty
   - burpsuite
+  - fzf
+  - k9s
   - lazygit
   - nvm
   - podman

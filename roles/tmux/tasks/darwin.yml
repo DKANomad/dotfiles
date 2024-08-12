@@ -3,3 +3,13 @@
   community.general.homebrew:
     name: tmux
 
+- name: "TMUX | Install TPM"
+  ansible.builtin.git:
+    repo: https://github.com/tmux-plugins/tpm
+    dest: ~/.tmux/plugins/tpm
+
+- name: TMUX | Configure TMUX
+  ansible.builtin.copy:
+    src: "tmux.conf"
+    dest: "{{ ansible_user_dir }}/.tmux.conf"
+    mode: "0644"

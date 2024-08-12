@@ -7,6 +7,7 @@ export NVM_DIR="$HOME/.nvm"
 export PATH="$PATH:/Users/george/.dotnet/tools"
 
 eval "$(zoxide init zsh)"
+eval "$(fzf --zsh)"
 
 if [ "$TERM_PROGRAM" != "Apple_Terminal" ]; then
   eval "$(oh-my-posh init zsh --config $(brew --prefix oh-my-posh)/themes/M365Princess.omp.json)"
@@ -21,6 +22,7 @@ PATH="/opt/homebrew/opt/coreutils/libexec/gnubin:$PATH"
 
 alias ll='ls -lGa'
 alias lg='lazygit'
+alias k='kubectl'
 
 export JAVA_HOME="/opt/homebrew/opt/openjdk@17/bin"
 export ANDROID_HOME="/Users/george/Library/Android/sdk"

@@ -1,0 +1,4 @@
+---
+- name: K9s | Install using brew
+  community.general.homebrew:
+    name: derailed/k9s/k9s
