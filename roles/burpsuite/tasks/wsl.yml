@@ -1,5 +1,7 @@
 ---
-- name: Burpsuite | Install using choco
-  win_chocolatey:
-    name: burp-suite-free-edition
-    state: present
+- name: Install Burpsuite
+  ansible.builtin.include_role:
+    name: winget
+  vars:
+    winget_packages:
+      - PortSwigger.BurpSuite.Community

@@ -1,0 +1,19 @@
+import = [ "C:/Users/GeorgeLawton/AppData/Roaming/alacritty/rosepine.toml" ]
+working_directory = "C:/Users/GeorgeLawton/"
+
+[shell]
+program = "wsl.exe"
+args = ["tmux attach || tmux new-session -s main"]
+
+[window]
+dynamic_title = false
+title = "Terminals are better than GUIs"
+dimensions = { columns = 100, lines = 30 }
+
+[font]
+normal = {family = "CaskaydiaCove NF", style = "Regular"}
+
+[keyboard]
+bindings = [
+       { key = "Space", mods = "Control", chars = "\u0000" }
+]
