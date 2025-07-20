@@ -24,12 +24,20 @@ PATH="/opt/homebrew/opt/coreutils/libexec/gnubin:$PATH"
 PATH="/opt/homebrew/Cellar/john-jumbo/1.9.0_1/share/john:$PATH"
 PATH="$GOPATH/bin:$PATH"
 
+export PATH="$PATH":"$HOME/.pub-cache/bin"
+
 alias ll='ls -lGa'
 alias lg='lazygit'
 alias k='kubectl'
 alias ns='/opt/homebrew/bin/netcat'
+alias py='python3'
 
 export JAVA_HOME="/opt/homebrew/opt/openjdk@17/bin"
 export ANDROID_HOME="/Users/george/Library/Android/sdk"
 export PATH="$PATH:$ANDROID_HOME/tools:$ANDROID_HOME/platform-tools"
 export PATH="/opt/homebrew/opt/openjdk@17/bin:$PATH"
+
+if [ -d "/opt/homebrew/opt/ruby/bin" ]; then
+  export PATH=/opt/homebrew/opt/ruby/bin:$PATH
+  export PATH=`gem environment gemdir`/bin:$PATH
+fi
