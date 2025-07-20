@@ -9,6 +9,8 @@ default_roles:
   - pwsh
   - tmux
   - zsh
+  - golang
+  - elixir
 
 git_user_name: "DKANomad"
 git_user_email: !vault |
