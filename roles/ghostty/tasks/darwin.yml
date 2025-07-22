@@ -11,8 +11,14 @@
         state: directory
         mode: "0755"
 
-    - name: Copty ghostty config
+    - name: Copy ghostty config
       ansible.builtin.copy:
         src: config
         dest: "{{ ansible_user_dir }}/.config/ghostty/config"
         mode: "0644"
+
+    - name: Copy ghostty start script
+      ansible.builtin.copy:
+        src: tmux_ghostty.sh
+        dest: "{{ ansible_user_dir }}/.config/ghostty/tmux_ghostty.sh"
+        mode: "0764"
