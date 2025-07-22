@@ -1,0 +1,4 @@
+font-family = "FiraMono Nerd Font"
+shell-integration = zsh
+initial-command = "/bin/zsh --login -c tmux a || tmux new -s main"
+maximize = true
