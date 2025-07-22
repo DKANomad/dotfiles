@@ -6,7 +6,7 @@ font-family = "FiraMono Nerd Font"
 maximize = true
 
 theme = carbonfox
-background-opacity = 0.8
+background-opacity = 0.9
 background-blur = true
 
 window-padding-y = 0
