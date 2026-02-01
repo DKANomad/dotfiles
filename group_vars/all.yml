@@ -12,6 +12,7 @@ default_roles:
   - golang
   - elixir
   - ghostty
+  - rust
 
 git_user_name: "DKANomad"
 git_user_email: !vault |

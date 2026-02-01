@@ -1,0 +1,24 @@
+---
+- name: Rust | Install rust via curl
+  block:
+    - name: Rust | Check if rustup is installed
+      ansible.builtin.stat:
+        path: "{{ ansible_env.HOME }}/.cargo/bin/rustup"
+      register: rustup_installed
+
+    - name: Rust | Install rustup
+      ansible.builtin.shell: >
+        set -o pipefail && curl --proto '=https' --tlsv1.2 -sSf https://sh.rustup.rs | sh -s -- -y
+      args:
+        creates: "{{ ansible_env.HOME }}/.cargo/bin/rustup"
+        executable: /bin/bash
+      when: not rustup_installed.stat.exists
+
+    - name: Rust | Add cargo bin to PATH in shell profile
+      ansible.builtin.lineinfile:
+        path: "{{ ansible_env.HOME }}/.zshrc"
+        line: 'export PATH="$HOME/.cargo/bin:$PATH"'
+        create: yes
+      when: not rustup_installed.stat.exists
+    
+    
