@@ -59,7 +59,7 @@ fi
 if [[ -f "$DOTFILES_DIR/requirements.yml" ]]; then
     cd "$DOTFILES_DIR"
 
-    ansible-galaxy collection install -r requirements.yml --force
+    ansible-galaxy collection install -r requirements.yml --upgrade
 fi
 
 cd "$DOTFILES_DIR"
