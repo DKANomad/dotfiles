@@ -6,7 +6,7 @@
   register: winget_installed
   failed_when: winget_installed is not defined
 
-- name: Install Winget Package Manager
+- name: Install Winget Package Manager  # noqa: risky-shell-pipe
   ansible.builtin.shell: |
     $hasPackageManager = Get-AppPackage -name "Microsoft.DesktopAppInstaller"
     if (-Not($hasPackageManager)) {

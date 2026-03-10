@@ -33,4 +33,4 @@
     src: profile
     dest: "/mnt/c/Users/{{ wsl_host_user }}/Documents/PowerShell/Microsoft.PowerShell_profile.ps1"
     force: true
-  
+    mode: "0644"

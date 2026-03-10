@@ -15,10 +15,8 @@
       when: not rustup_installed.stat.exists
 
     - name: Rust | Add cargo bin to PATH in shell profile
-      ansible.builtin.lineinfile:
+      ansible.builtin.lineinfile: # noqa: risky-file-permissions
         path: "{{ ansible_env.HOME }}/.zshrc"
         line: 'export PATH="$HOME/.cargo/bin:$PATH"'
-        create: yes
+        create: true
       when: not rustup_installed.stat.exists
-    
-    

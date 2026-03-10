@@ -19,7 +19,7 @@
       failed_when: false
       args:
         executable: powershell.exe
-      when: alacritty_dir.stat.exists == false
+      when: not alacritty_dir.stat.exists
 
     - name: Copy Alacritty config
       ansible.builtin.template:
