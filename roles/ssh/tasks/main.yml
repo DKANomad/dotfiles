@@ -1,0 +1,12 @@
+---
+- name: SSH | Ensure ~/.ssh directory exists
+  ansible.builtin.file:
+    path: "{{ ansible_user_dir }}/.ssh"
+    state: directory
+    mode: "0700"
+
+- name: SSH | Deploy keys
+  ansible.builtin.include_tasks: deploy_key.yml
+  loop: "{{ ssh_keys | selectattr('profiles', 'contains', profile) | list }}"
+  loop_control:
+    loop_var: ssh_key_item

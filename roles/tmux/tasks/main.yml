@@ -1,4 +1,4 @@
 ---
 - name: "TMUX | Run mac tasks"
   ansible.builtin.import_tasks: darwin.yml
-  when: ansible_os_family == 'Dawrin'
+  when: ansible_os_family == 'Darwin'

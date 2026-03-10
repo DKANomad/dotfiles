@@ -22,6 +22,7 @@
       when: alacritty_dir.stat.exists == false
 
     - name: Copy Alacritty config
-      ansible.builtin.copy:
-        src: alacritty_wsl.toml
+      ansible.builtin.template:
+        src: alacritty_wsl.toml.j2
         dest: /mnt/c/Users/{{ wsl_host_user }}/AppData/Roaming/alacritty/alacritty.toml
+        mode: "0644"

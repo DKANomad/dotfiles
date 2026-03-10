@@ -1,0 +1,17 @@
+---
+profile: production
+
+exclude_paths:
+  - .git/
+  - .github/
+
+warn_list:
+  - experimental
+
+skip_list:
+  - name[template]
+  - no-changed-when
+
+mock_modules:
+  - community.general.homebrew
+  - community.general.homebrew_cask

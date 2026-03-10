@@ -1,25 +1,38 @@
-default_roles:
-  - alacritty
-  - burpsuite
-  - fzf
-  - k9s
-  - lazygit
-  - nvm
-  - podman
-  - pwsh
-  - tmux
-  - zsh
-  - golang
-  - elixir
-  - ghostty
-  - rust
-
 git_user_name: "DKANomad"
-git_user_email: !vault |
-    $ANSIBLE_VAULT;1.1;AES256
-    33643865613932326535333338326463306531623065326361636133343566656632343162343635
-    3063346231363039393938306236393037376230636436320a313332353661313835626434356232
-    36383934666236366637323436663038306132636235303362363439353863643436356534663638
-    6361616231363363380a303033383863643762626134313532363734336337663137363264363731
-    3237
+op_git_email: "op://Personal/Git Config/email"
 
+dotfiles_roles:
+  - name: ssh
+    profiles: [personal, work]
+  - name: alacritty
+    profiles: [personal, work]
+  - name: burpsuite
+    profiles: [personal]
+  - name: fzf
+    profiles: [personal, work]
+  - name: k9s
+    profiles: [personal, work]
+  - name: lazygit
+    profiles: [personal, work]
+  - name: nvm
+    profiles: [personal, work]
+  - name: podman
+    profiles: [personal]
+  - name: pwsh
+    profiles: [personal, work]
+  - name: tmux
+    profiles: [personal, work]
+  - name: zsh
+    profiles: [personal, work]
+  - name: golang
+    profiles: [personal, work]
+  - name: elixir
+    profiles: [personal, work]
+  - name: ghostty
+    profiles: [personal, work]
+
+ssh_keys:
+  - name: id_ed25519
+    profiles: [personal]
+    op_private_key: "op://Personal/SSH Key/private key"
+    op_public_key: "op://Personal/SSH Key/public key"

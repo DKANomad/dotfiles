@@ -22,6 +22,12 @@
   args:
     executable: pwsh.exe
 
+- name: Powershell | Ensure PowerShell profile directory exists
+  ansible.builtin.file:
+    path: "/mnt/c/Users/{{ wsl_host_user }}/Documents/PowerShell"
+    state: directory
+    mode: "0755"
+
 - name: Powershell | Copy profile
   ansible.builtin.copy:
     src: profile
