@@ -30,6 +30,10 @@ dotfiles_roles:
     profiles: [personal, work]
   - name: ghostty
     profiles: [personal, work]
+  - name: claude-code
+    profiles: [personal]
+  - name: cursor
+    profiles: [personal]
 
 ssh_keys:
   - name: id_ed25519
