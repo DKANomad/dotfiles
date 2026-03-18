@@ -1,4 +1,9 @@
 ---
+- name: "ZSH | Tap oh-my-posh"
+  community.general.homebrew_tap:
+    name: jandedobbeleer/oh-my-posh
+    state: present
+
 - name: "ZSH | Install oh-my-posh"
   community.general.homebrew:
     name: jandedobbeleer/oh-my-posh/oh-my-posh
