@@ -37,12 +37,10 @@
       ansible.builtin.set_fact:
         run_roles: >-
           {{
-            ansible_run_tags != ['all']
-            and ansible_run_tags
-            or (dotfiles_roles
-                | selectattr('profiles', 'contains', profile)
-                | map(attribute='name')
-                | difference(exclude_roles | default([])))
+            dotfiles_roles
+            | selectattr('profiles', 'contains', profile)
+            | map(attribute='name')
+            | difference(exclude_roles | default([]))
           }}
       tags:
         - always
