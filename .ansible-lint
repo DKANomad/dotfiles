@@ -11,7 +11,9 @@ warn_list:
 skip_list:
   - name[template]
   - no-changed-when
+  - role-name
 
 mock_modules:
   - community.general.homebrew
   - community.general.homebrew_cask
+  - community.general.homebrew_tap

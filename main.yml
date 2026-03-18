@@ -9,12 +9,6 @@
       tags:
         - always
 
-    - name: Detect WSL
-      ansible.builtin.debug:
-        var: ansible_host_environment_is_wsl
-      tags:
-        - always
-
     - name: Confirm Windows Powershell Execution Policy
       ansible.builtin.import_tasks: pre_tasks/powershell_executionpolicy.yml
       when: ansible_host_environment_is_wsl
@@ -33,6 +27,14 @@
         - always
 
   tasks:
+    - name: Validate profile input
+      ansible.builtin.assert:
+        that:
+          - profile in ['personal', 'work']
+        fail_msg: "Invalid profile '{{ profile }}'. Expected one of: personal, work."
+      tags:
+        - always
+
     - name: Set roles
       ansible.builtin.set_fact:
         run_roles: >-
@@ -42,12 +44,6 @@
             | map(attribute='name')
             | difference(exclude_roles | default([]))
           }}
-      tags:
-        - always
-
-    - name: Display roles
-      ansible.builtin.debug:
-        var: run_roles
       tags:
         - always
 

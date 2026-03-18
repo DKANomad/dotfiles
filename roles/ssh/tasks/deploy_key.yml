@@ -1,16 +1,10 @@
 ---
-- name: "SSH | Check if {{ ssh_key_item.name }} exists"
-  ansible.builtin.stat:
-    path: "{{ ansible_user_dir }}/.ssh/{{ ssh_key_item.name }}"
-  register: ssh_key_stat
-
 - name: "SSH | Deploy {{ ssh_key_item.name }} from 1Password"
-  when: not ssh_key_stat.stat.exists
   block:
     - name: "SSH | Read private key"
       ansible.builtin.command: op read "{{ ssh_key_item.op_private_key }}"
       register: ssh_private_key
-      changed_when: true
+      changed_when: false
       no_log: true
 
     - name: "SSH | Write private key"
@@ -23,10 +17,12 @@
     - name: "SSH | Read public key"
       ansible.builtin.command: op read "{{ ssh_key_item.op_public_key }}"
       register: ssh_public_key
-      changed_when: true
+      changed_when: false
+      no_log: true
 
     - name: "SSH | Write public key"
       ansible.builtin.copy:
         content: "{{ ssh_public_key.stdout }}\n"
         dest: "{{ ansible_user_dir }}/.ssh/{{ ssh_key_item.name }}.pub"
         mode: "0644"
+      no_log: true
