@@ -8,6 +8,8 @@ dotfiles_roles:
     profiles: [personal, work]
   - name: burpsuite
     profiles: [personal]
+  - name: fd
+    profiles: [personal, work]
   - name: fzf
     profiles: [personal, work]
   - name: k9s

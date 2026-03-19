@@ -15,4 +15,4 @@
   ansible.builtin.command:
     cmd: /bin/bash "{{ ansible_user_dir }}/.cache/dotfiles/installers/claude-install.sh"
   args:
-    creates: "{{ ansible_env.HOME }}/.claude/local/claude"
+    creates: "{{ ansible_env.HOME }}/.local/bin/claude"

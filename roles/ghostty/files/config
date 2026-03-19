@@ -10,3 +10,4 @@ background-opacity = 0.9
 background-blur = true
 
 window-padding-y = 0
+macos-option-as-alt = true
