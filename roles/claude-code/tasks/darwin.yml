@@ -16,3 +16,16 @@
     cmd: /bin/bash "{{ ansible_user_dir }}/.cache/dotfiles/installers/claude-install.sh"
   args:
     creates: "{{ ansible_env.HOME }}/.local/bin/claude"
+
+- name: "Claude Code | Ensure skills directory exists"
+  ansible.builtin.file:
+    path: "{{ ansible_user_dir }}/.claude/skills"
+    state: directory
+    mode: "0755"
+
+- name: "Claude Code | Deploy custom skills"
+  ansible.builtin.copy:
+    src: skills/
+    dest: "{{ ansible_user_dir }}/.claude/skills/"
+    mode: preserve
+    directory_mode: "0755"
