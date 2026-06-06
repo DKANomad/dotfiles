@@ -1,0 +1,5 @@
+---
+- name: "GitHub CLI | Install via Homebrew"
+  community.general.homebrew:
+    name: gh
+    state: present

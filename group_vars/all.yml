@@ -16,6 +16,8 @@ dotfiles_roles:
     profiles: [personal, work]
   - name: lazygit
     profiles: [personal, work]
+  - name: gh
+    profiles: [personal, work]
   - name: nvm
     profiles: [personal, work]
   - name: podman
