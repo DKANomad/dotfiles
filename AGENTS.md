@@ -43,6 +43,8 @@ ssh_keys:
 
 `main.yml` filters `dotfiles_roles` at runtime using `selectattr('profiles', 'contains', profile)`. The `ssh` role does the same for `ssh_keys`. **Never create separate per-profile files** — all role/key assignments live in `all.yml` only.
 
+**Valid profiles are `personal` and `work`, validated in two places** — the bash guard in `bin/dotfiles` and the `assert` task in `main.yml`. To add a new profile (e.g. `server`), update *both* guards, then tag the relevant roles/keys with it in `all.yml`.
+
 ### Role Structure
 
 Every role follows this layout:
@@ -76,6 +78,26 @@ roles/<name>/
 - `whoami_wsl.yml` — sets `wsl_host_user` (WSL only)
 - `powershell_executionpolicy.yml` — WSL only
 
+### Running a Subset
+
+`main.yml` applies each role's own name as a tag, so a single role can be run or tested in isolation without executing the whole playbook — the fastest way to verify a new or changed role:
+
+```bash
+# Run only the codex role (personal profile)
+ansible-playbook --diff -e "profile=personal" --tags codex main.yml
+
+# Dry run — preview changes without applying them
+ansible-playbook --check --diff -e "profile=personal" --tags codex main.yml
+```
+
+To skip specific roles, pass the `exclude_roles` extra-var:
+
+```bash
+ansible-playbook --diff -e "profile=personal" -e '{"exclude_roles": ["burpsuite"]}' main.yml
+```
+
+(`--check` is best-effort: shell/`command` tasks with `creates:` may report differently than a real run, but it's safe and useful for previewing.)
+
 ---
 
 ## Conventions
@@ -99,7 +121,11 @@ homebrew:
 
 ### Homebrew Tasks
 
-Use `community.general.homebrew` for CLI tools and `community.general.homebrew_cask` for GUI apps. Both are already idempotent with `state: present` — no additional guards needed.
+- `community.general.homebrew` — CLI tools distributed as formulae.
+- `community.general.homebrew_cask` — GUI apps **and** CLI tools that Homebrew only ships as a cask (e.g. `codex`). When in doubt, run `brew info <name>`: a `From: …/homebrew-cask/…` line means use the cask module, not the formula module.
+- `community.general.homebrew_tap` — to register a third-party tap before installing from it.
+
+All three are idempotent with `state: present` — no additional guards needed — and all three are mocked for CI lint (see the ansible-lint section).
 
 ### Windows / WSL Package Installation
 
@@ -138,7 +164,7 @@ This repo uses 1Password CLI (`op`) for all secrets. The bootstrap gate in `bin/
 **When adding a new secret:**
 - Always ask the user for the exact `op://Vault/Item/field` path — do not guess or invent paths
 - Store the reference as a variable in `group_vars/all.yml`, not inline in a task
-- Fetch at runtime using `ansible.builtin.command: op read "{{ variable }}"` with `no_log: true` for sensitive values
+- Fetch at runtime using `ansible.builtin.command: op read "{{ variable }}"` with `no_log: true` and `changed_when: false` (a read never changes state) — see `roles/ssh/tasks/deploy_key.yml` for the canonical pattern
 
 ---
 
@@ -153,8 +179,9 @@ cd ~/.dotfiles && ansible-lint
 Skipped rules (configured in `.ansible-lint`):
 - `name[template]` — dynamic task names are intentional
 - `no-changed-when` — some shell tasks legitimately always change
+- `role-name` — role names may use hyphens (e.g. `claude-code`)
 
-Mocked modules: `community.general.homebrew`, `community.general.homebrew_cask` (not available in CI lint environment).
+Mocked modules (not available in the CI lint environment): `community.general.homebrew`, `community.general.homebrew_cask`, `community.general.homebrew_tap`.
 
 If a lint rule genuinely cannot be fixed (e.g. `risky-file-permissions` on `lineinfile` which has no `mode` parameter), add a targeted `# noqa: <rule>` inline comment on the task's `name:` line — not on the module line.
 
@@ -171,7 +198,8 @@ If a lint rule genuinely cannot be fixed (e.g. `risky-file-permissions` on `line
 1. Create `roles/<name>/tasks/main.yml` with OS dispatch
 2. Create `roles/<name>/tasks/darwin.yml` (and `wsl.yml` if needed)
 3. Add the role to `dotfiles_roles` in `group_vars/all.yml` with appropriate `profiles`
-4. Run `ansible-lint` and fix all errors
+4. Test it in isolation: `ansible-playbook --diff -e "profile=personal" --tags <name> main.yml`
+5. Run `ansible-lint` and fix all errors
 
 ---
 
