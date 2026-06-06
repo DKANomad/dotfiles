@@ -36,6 +36,8 @@ dotfiles_roles:
     profiles: [personal]
   - name: cursor
     profiles: [personal]
+  - name: codex
+    profiles: [personal]
 
 ssh_keys:
   - name: id_ed25519

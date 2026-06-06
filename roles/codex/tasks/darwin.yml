@@ -1,0 +1,5 @@
+---
+- name: "Codex CLI | Install via Homebrew cask"
+  community.general.homebrew_cask:
+    name: codex
+    state: present
