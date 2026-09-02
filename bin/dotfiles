@@ -50,17 +50,30 @@ if ! [ -x "$(command -v ansible)" ]; then
     pipx install --include-deps ansible
 fi
 
-# Install ansible-lint
-if ! [ -x "$(command -v ansible-lint)" ]; then
-    pipx install ansible-lint
-fi
-
 if ! [[ -d "$DOTFILES_DIR" ]]; then
     echo "Cloning repository"
     git clone --quiet https://github.com/dkanomad/dotfiles.git "$DOTFILES_DIR"
 else
     echo "Updating repository"
     git -C "$DOTFILES_DIR" pull --quiet
+fi
+
+# Install ansible-lint at the version pinned in requirements-dev.txt, so local
+# runs match CI. Guarded by a version check so --force never re-runs needlessly.
+if [[ -f "$DOTFILES_DIR/requirements-dev.txt" ]]; then
+    ANSIBLE_LINT_SPEC="$(grep -E '^ansible-lint==' "$DOTFILES_DIR/requirements-dev.txt" || true)"
+    ANSIBLE_LINT_VERSION="${ANSIBLE_LINT_SPEC#ansible-lint==}"
+    INSTALLED_LINT_VERSION="$(ansible-lint --version 2>/dev/null | head -1 | awk '{print $2}')"
+
+    if [[ -z "$ANSIBLE_LINT_SPEC" ]]; then
+        echo "ERROR: no 'ansible-lint==' pin found in requirements-dev.txt"
+        exit 1
+    fi
+
+    if [[ "$INSTALLED_LINT_VERSION" != "$ANSIBLE_LINT_VERSION" ]]; then
+        echo "Installing ansible-lint ${ANSIBLE_LINT_VERSION} (found: ${INSTALLED_LINT_VERSION:-none})"
+        pipx install --force "$ANSIBLE_LINT_SPEC"
+    fi
 fi
 
 if [[ -f "$DOTFILES_DIR/requirements.yml" ]]; then

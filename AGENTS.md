@@ -123,7 +123,7 @@ homebrew:
 
 - `community.general.homebrew` — CLI tools distributed as formulae.
 - `community.general.homebrew_cask` — GUI apps **and** CLI tools that Homebrew only ships as a cask (e.g. `codex`). When in doubt, run `brew info <name>`: a `From: …/homebrew-cask/…` line means use the cask module, not the formula module.
-- `community.general.homebrew_tap` — to register a third-party tap before installing from it.
+- `community.general.homebrew_tap` — to register a third-party tap before installing from it. **Required**: unlike `brew install` on the command line, the `homebrew` module resolves the formula before installing, so a fully-qualified name like `anomalyco/tap/opencode` fails on a machine that has not already tapped the repo. Always pair the install task with a `homebrew_tap` task.
 
 All three are idempotent with `state: present` — no additional guards needed — and all three are mocked for CI lint (see the ansible-lint section).
 
@@ -175,6 +175,14 @@ The repo enforces the `production` lint profile. **Always run `ansible-lint` out
 ```bash
 cd ~/.dotfiles && ansible-lint
 ```
+
+**The version is pinned in `requirements-dev.txt`** and is the single source of truth for both the local install (`bin/dotfiles`) and CI. Newer releases add rules, so an unpinned local copy can pass while CI fails. If your local version drifts, re-sync it:
+
+```bash
+pipx install --force "$(grep '^ansible-lint==' ~/.dotfiles/requirements-dev.txt)"
+```
+
+To upgrade, bump the pin in `requirements-dev.txt`, re-sync locally, then fix whatever new rules fire.
 
 Skipped rules (configured in `.ansible-lint`):
 - `name[template]` — dynamic task names are intentional
