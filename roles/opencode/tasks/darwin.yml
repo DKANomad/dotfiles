@@ -8,3 +8,16 @@
   community.general.homebrew:
     name: anomalyco/tap/opencode
     state: present
+
+- name: "OpenCode | Ensure config directory exists"
+  ansible.builtin.file:
+    path: "{{ ansible_user_dir }}/.config/opencode"
+    state: directory
+    mode: "0755"
+
+- name: "OpenCode | Deploy global config"
+  ansible.builtin.copy:
+    src: config/
+    dest: "{{ ansible_user_dir }}/.config/opencode/"
+    mode: "0644"
+    directory_mode: "0755"
