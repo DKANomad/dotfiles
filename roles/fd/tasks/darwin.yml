@@ -1,4 +1,4 @@
 ---
-- name: "fd | Install with homebrew"
+- name: "Fd | Install with homebrew"
   community.general.homebrew:
     name: fd
