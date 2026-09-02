@@ -1,0 +1,10 @@
+---
+- name: "OpenCode | Tap the official OpenCode repository"
+  community.general.homebrew_tap:
+    name: anomalyco/tap
+    state: present
+
+- name: "OpenCode | Install via Homebrew"
+  community.general.homebrew:
+    name: anomalyco/tap/opencode
+    state: present

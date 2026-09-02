@@ -40,6 +40,8 @@ dotfiles_roles:
     profiles: [personal]
   - name: codex
     profiles: [personal]
+  - name: opencode
+    profiles: [personal]
 
 ssh_keys:
   - name: id_ed25519
