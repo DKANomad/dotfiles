@@ -1,1 +1,5 @@
 vault-password.txt
+
+# ansible-lint regenerates these mock module stubs from the mock_modules
+# list in .ansible-lint on every run
+.ansible/
