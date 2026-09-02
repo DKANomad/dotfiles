@@ -18,8 +18,8 @@
     } else {
       $false
     }
-  register: install_winget_result
-  changed_when: install_winget_result.stdout != 'False'
+  register: winget_manager_result
+  changed_when: winget_manager_result.stdout != 'False'
   args:
     executable: powershell.exe
 

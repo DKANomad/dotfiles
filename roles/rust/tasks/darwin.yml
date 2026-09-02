@@ -4,7 +4,7 @@
     - name: Rust | Check if rustup is installed
       ansible.builtin.stat:
         path: "{{ ansible_env.HOME }}/.cargo/bin/rustup"
-      register: rustup_installed
+      register: rust_rustup_installed
 
     - name: Rust | Install rustup
       ansible.builtin.shell: >
@@ -12,11 +12,11 @@
       args:
         creates: "{{ ansible_env.HOME }}/.cargo/bin/rustup"
         executable: /bin/bash
-      when: not rustup_installed.stat.exists
+      when: not rust_rustup_installed.stat.exists
 
     - name: Rust | Add cargo bin to PATH in shell profile
       ansible.builtin.lineinfile: # noqa: risky-file-permissions
         path: "{{ ansible_env.HOME }}/.zshrc"
         line: 'export PATH="$HOME/.cargo/bin:$PATH"'
         create: true
-      when: not rustup_installed.stat.exists
+      when: not rust_rustup_installed.stat.exists
